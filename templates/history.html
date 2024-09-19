@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Історія Обліку</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">
+    <style>
+        /* Стили для вкладок */
+        .tabs {
+            display: flex;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            margin-right: 5px;
+            background-color: #ddd;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            text-align: center;
+        }
+
+        .tab.active {
+            background-color: #fff;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<!-- Шапка -->
+<header>
+    <div class="header-content">
+        <div class="header-left">
+            <h1 class="header-title">Історія Обліку</h1>
+        </div>
+        <nav class="nav-container">
+            <ul>
+                <li><a href="{{ url_for('routes.main_page') }}">Головна</a></li>
+                <li>
+                    <a href="{{ url_for('routes.index_pl') }}">Польський Магазин</a>
+                    <img src="{{ url_for('static', filename='img/poland-flag.png') }}" alt="Польський прапор"
+                         class="flag">
+                </li>
+                <li>
+                    <a href="{{ url_for('routes.index_ua') }}">Український Магазин</a>
+                    <img src="{{ url_for('static', filename='img/ukraine-flag.png') }}" alt="Український прапор"
+                         class="flag">
+                </li>
+                <li><a href="{{ url_for('routes.view_history') }}">Історія</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="tabs">
+        <div class="tab active" data-tab="purchases">Закупівлі</div>
+        <div class="tab" data-tab="sales">Продажі</div>
+    </div>
+
+    <div id="purchases" class="tab-content active">
+        <table>
+            <thead>
+            <tr>
+                <th>Дата та час</th>
+                <th>Назва продукту</th>
+                <th>Кількість</th>
+                <th>Ціна</th>
+                <th>Магазин</th>
+                <th>Редагувати</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for record in purchases %}
+            <tr>
+                <td>{{ record.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ record.product_name }}</td>
+                <td>{{ record.quantity }}</td>
+                <td>{{ record.price }}</td>
+                <td>
+                    {% if record.store_prefix == 'pl' %}
+                    <img src="{{ url_for('static', filename='img/poland-flag.png') }}" alt="Польський прапор"
+                         class="flag">
+                    {% elif record.store_prefix == 'ua' %}
+                    <img src="{{ url_for('static', filename='img/ukraine-flag.png') }}" alt="Український прапор"
+                         class="flag">
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="button edit"
+                       href="{{ url_for('routes.edit_transaction', history_id=record.id, store_prefix=record.store_prefix) }}">Редагувати</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="sales" class="tab-content">
+        <table>
+            <thead>
+            <tr>
+                <th>Дата та час</th>
+                <th>Назва продукту</th>
+                <th>Кількість</th>
+                <th>Ціна</th>
+                <th>Платформа</th>  <!-- Новая колонка для платформы -->
+                <th>Магазин</th>
+                <th>Редагувати</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for record in sales %}
+            <tr>
+                <td>{{ record.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ record.product_name }}</td>
+                <td>{{ record.quantity }}</td>
+                <td>{{ record.price }}</td>
+                <td>{{ record.platform }}</td>  <!-- Отображение платформы -->
+                <td>
+                    {% if record.store_prefix == 'pl' %}
+                    <img src="{{ url_for('static', filename='img/poland-flag.png') }}" alt="Польський прапор"
+                         class="flag">
+                    {% elif record.store_prefix == 'ua' %}
+                    <img src="{{ url_for('static', filename='img/ukraine-flag.png') }}" alt="Український прапор"
+                         class="flag">
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="button edit"
+                       href="{{ url_for('routes.edit_transaction', history_id=record.id, store_prefix=record.store_prefix) }}">Редагувати</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetTab = tab.getAttribute('data-tab');
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(content => {
+                        if (content.id === targetTab) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
+                        }
+                    });
+                    tab.classList.add('active');
+                });
+            });
+        });
+
+
+
+</script>
+</body>
+</html>

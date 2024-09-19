@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Головна Сторінка</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1>Облік Товарів</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('routes.main_page') }}">Головна</a></li>
+                <li>
+                    <a href="{{ url_for('routes.index_pl') }}">Магазин Польщі</a>
+                    <img src="{{ url_for('static', filename='img/poland-flag.png') }}" alt="Польський прапор"
+                         class="flag">
+                </li>
+                <li>
+                    <a href="{{ url_for('routes.index_ua') }}">Магазин України</a>
+                    <img src="{{ url_for('static', filename='img/ukraine-flag.png') }}" alt="Український прапор"
+                         class="flag">
+                </li>
+                <li><a href="{{ url_for('routes.view_history') }}">Історія</a></li>
+            </ul>
+        </nav>
+        <div id="total-difference-container">
+            Загальна різниця: <span id="total-difference"
+                                    class="{{ 'positive' if total_difference >= 0 else 'negative' }}">
+    {{ total_difference | round(2) }}</span>
+        </div>
+    </div>
+</header>
+
+<main>
+    <h2>Підсумок</h2>
+    <div id="summary">
+        <p class="left">Загальна сума закупівель: <span id="total-purchase-amount">{{ total_purchase_amount | round(2) }}</span>
+        </p>
+        <p class="right">Загальна сума продаж: <span id="total-sales-amount">{{ total_sales_amount | round(2) }}</span>
+        </p>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <p>© 2024 Облік Товарів. Усі права захищено.</p>
+        <p>Uladzimir Radchanka</p>
+    </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

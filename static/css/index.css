@@ -1,0 +1,145 @@
+header {
+    background-color: #2c2c2c;
+    color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #444;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li {
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+}
+
+#total-difference-container {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.positive {
+    color: #0f0;
+}
+
+.negative {
+    color: #f00;
+}
+
+.flag {
+    width: 20px;
+    height: auto;
+    margin-left: 5px;
+}
+
+@media (max-width: 600px) {
+    .flag {
+        width: 16px;
+    }
+}
+
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+table th {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+    text-align: left;
+}
+
+table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.button {
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin: 0 5px;
+}
+
+.button.sell {
+    background-color: #28a745;
+}
+
+.button.edit {
+    background-color: #ffc107;
+}
+
+.add-product-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.add-product a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.summary {
+    text-align: right;
+}
+
+.summary p {
+    margin: 5px 0;
+    font-size: 18px;
+}
+.inactive {
+    background-color: rgba(248, 215, 218, 0.5); /* Полупрозрачный светло-красный цвет фона */
+    color: rgba(229, 57, 53, 0.7); /* Полупрозрачный красный цвет текста */
+    text-decoration: none; /* Убираем любое зачеркивание */
+}
+
+.inactive td {
+    text-decoration: none; /* Убираем зачеркивание для ячеек */
+}

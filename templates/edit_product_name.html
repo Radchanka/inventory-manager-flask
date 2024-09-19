@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Редагувати Назву Товару</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_product_name.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Редагувати Назву Товару</h1>
+        </div>
+    </header>
+    <main>
+        <form action="{{ url_for('routes.edit_product_name_page', store_prefix=store_prefix, product_id=product.id) }}" method="POST" class="edit-form">
+            <label for="name">Нова Назва:</label>
+            <input type="text" id="name" name="name" value="{{ product.name }}" required>
+            <input type="submit" value="Оновити Назву" class="submit-button">
+        </form>
+        <a href="{{ url_for('routes.index_' + store_prefix) }}" class="back-link">Назад до Списку Товарів</a>
+    </main>
+</body>
+</html>

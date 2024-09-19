@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інвентаризація - {{ store_prefix }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <h1>Менеджер Інвентаризації</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('routes.main_page') }}">Головна</a></li>
+                <li>
+                    <a href="{{ url_for('routes.index_pl') }}">Магазин Польщі</a>
+                    <img src="{{ url_for('static', filename='img/poland-flag.png') }}" alt="Польський прапор"
+                         class="flag">
+                </li>
+                <li>
+                    <a href="{{ url_for('routes.index_ua') }}">Магазин України</a>
+                    <img src="{{ url_for('static', filename='img/ukraine-flag.png') }}" alt="Український прапор"
+                         class="flag">
+                </li>
+                <li><a href="{{ url_for('routes.view_history') }}">Історія</a></li>
+            </ul>
+        </nav>
+        <div id="total-difference-container">
+            Загальна Різниця: <span id="total-difference"
+                                    class="{{ 'positive' if total_difference >= 0 else 'negative' }}">{{ total_difference | round(2) }}</span>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="add-product-container">
+        <div class="add-product">
+            <a href="{{ url_for('routes.add_product_' + store_prefix) }}">Додати Товар</a>
+        </div>
+        <div class="summary">
+            <p>Загальна сума закупівель: {{ total_purchase_amount | round(2) }}</p>
+            <p>Загальна сума продаж: {{ total_sales_amount  | round(2)}}</p>
+        </div>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Назва</th>
+            <th>Загальна Кількість</th>
+            <th>Загальна Закупівля</th>
+            <th>Загальний Продаж</th>
+            <th>Різниця</th>
+            <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+        <tr class="{{ 'inactive' if product.total_quantity == 0 else '' }}">
+            <td>{{ product.name }}</td>
+            <td>{{ product.total_quantity }}</td>
+            <td>{{ product.total_purchase_amount | round(2) }}</td>
+            <td>{{ product.total_sales_amount | round(2) }}</td>
+            <td class="{{ 'positive' if product.total_sales_amount - product.total_purchase_amount >= 0 else 'negative' }}">
+                {{ (product.total_sales_amount - product.total_purchase_amount) | round(2) }}
+            </td>
+            <td>
+                <a class="button sell"
+                   href="{{ url_for('routes.sell_product_' + store_prefix, product_id=product.id) }}">Продати</a>
+                <a class="button edit"
+                   href="{{ url_for('routes.edit_product_name_page', store_prefix=store_prefix, product_id=product.id) }}">Редагувати
+                    Назву</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
